@@ -39,10 +39,22 @@ function App() {
 
   // 絡む定義
   const columns = [
-    { accessorKey: 'userId', },
-    { accessorKey: 'id', },
-    { accessorKey: 'title', },
-    { accessorKey: 'body', },
+    { 
+      accessorKey: 'userId',
+      header: () => 'User ID',
+    },
+    {
+      accessorKey: 'id',
+      header: () => <span>ID</span>,
+    },
+    { 
+      accessorKey: 'title', 
+      header: 'Title',
+    },
+    { 
+      accessorKey: 'body', 
+      header: 'Body',
+    },
   ];
 
   // テーブル定義
