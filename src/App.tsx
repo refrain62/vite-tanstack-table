@@ -3,6 +3,12 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+import {
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+
 // 投稿データの型
 type Post = {
   userId: number;
@@ -29,20 +35,58 @@ function App() {
 
     // データ取得
     getPosts();
+  }, []);
+
+  // 絡む定義
+  const columns = [
+    { accessorKey: 'userId', },
+    { accessorKey: 'id', },
+    { accessorKey: 'title', },
+    { accessorKey: 'body', },
+  ];
+
+  // テーブル定義
+  const tablePosts = useReactTable({
+    data: posts,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
   });
 
   return (
     <>
       {/* Postの内容をテーブルに表示 */}
       <div style={{ margin: '2em' }}>
-        <h1>Hello</h1>
-        <ul>
-          {posts.map((post) => (
-            <li key={post.id}>
-              {post.title}
-            </li>
-          ))}
-        </ul>
+        <h1>Post List</h1>
+        <table>
+          <thead>
+            {tablePosts.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th key={header.id}>
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext()
+                    )}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {tablePosts.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td key={cell.id}>
+                    {flexRender(
+                      cell.column.columnDef.cell,
+                      cell.getContext()
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       <div>
