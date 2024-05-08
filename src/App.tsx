@@ -7,6 +7,7 @@ import {
   flexRender,
   getCoreRowModel,
   useReactTable,
+  createColumnHelper,
 } from '@tanstack/react-table';
 
 // 投稿データの型
@@ -37,22 +38,22 @@ function App() {
     getPosts();
   }, []);
 
-  // 絡む定義
+  // カラムヘルパー
+  const columnHelper = createColumnHelper<Post>();
+
+  // カラム定義
   const columns = [
-    { 
-      accessorKey: 'userId',
+    columnHelper.accessor('userId', {
       header: () => 'User ID',
-    },
-    {
-      accessorKey: 'id',
+    }),
+    columnHelper.accessor('id', {
       header: () => <span>ID</span>,
-    },
-    { 
-      accessorKey: 'title', 
+    }),
+    columnHelper.accessor('title', {
       header: 'Title',
       // テーブルセルのカスタマイズ
       cell: (props) => props.getValue().toUpperCase(),
-    },
+    }),
     { 
       accessorKey: 'body', 
       header: 'Body',
