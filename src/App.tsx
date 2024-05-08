@@ -105,6 +105,13 @@ function App() {
         <p>Page Count: {tablePosts.getPageCount()}</p>
         {/* ページネーション */}
         <div style={{ display: 'flex', marginBottom: '1em' }}>
+          {/* 戻るボタン */}
+          <button
+            disabled={!tablePosts.getCanPreviousPage()}
+            onClick={() => tablePosts.previousPage()}>
+              Privious
+          </button>
+
           {Array.from({ length: tablePosts.getPageCount() }, (_, i) => i).map(
             (index) => (
               <div
@@ -124,6 +131,12 @@ function App() {
           </div>
           )
           )}
+          {/* 進ボタン */}
+          <button
+            disabled={!tablePosts.getCanNextPage()}
+            onClick={() => tablePosts.nextPage()}>
+              Next
+          </button>          
         </div>
 
         <table>
