@@ -9,6 +9,7 @@ import {
   useReactTable,
   createColumnHelper,
   getPaginationRowModel,
+  getSortedRowModel,
 } from '@tanstack/react-table';
 
 // 投稿データの型
@@ -58,6 +59,8 @@ function App() {
       // テーブルセルのカスタマイズ
       // columnHelperを使うと propsの型がanyではなく解決される
       cell: (props) => props.getValue().toUpperCase(),
+      // ソートの初期値
+      sortDescFirst: false,
     }),
     { 
       accessorKey: 'body', 
@@ -95,7 +98,9 @@ function App() {
       pagination: {
         pageSize: 30,
       }
-    }
+    },
+    // ソート
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -105,6 +110,10 @@ function App() {
         <h1>Post List</h1>
         {/* 件数 */}
         <p>Page Count: {tablePosts.getPageCount()}</p>
+        {/* ソート状況 */}
+        <div>
+          Sorting: {<pre>{JSON.stringify(tablePosts.getState().sorting, null, 2)}</pre>}
+        </div>
         {/* データ取得件数選択 */}
         <div>Page Size</div>
         <select
@@ -161,11 +170,18 @@ function App() {
             {tablePosts.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
-                  <th key={header.id}>
+                  <th
+                    key={header.id}
+                    onClick={header.column.getToggleSortingHandler()}
+                    >
                     {flexRender(
                       header.column.columnDef.header,
                       header.getContext()
                     )}
+                    {{
+                      asc: ' 🔼',
+                      desc: ' 🔽',
+                    }[header.column.getIsSorted() as string] ?? null}
                   </th>
                 ))}
               </tr>
