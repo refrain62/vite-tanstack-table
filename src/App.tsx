@@ -50,6 +50,8 @@ function App() {
     { 
       accessorKey: 'title', 
       header: 'Title',
+      // テーブルセルのカスタマイズ
+      cell: (props) => props.getValue().toUpperCase(),
     },
     { 
       accessorKey: 'body', 
