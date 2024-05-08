@@ -52,6 +52,7 @@ function App() {
     columnHelper.accessor('title', {
       header: 'Title',
       // テーブルセルのカスタマイズ
+      // columnHelperを使うと propsの型がanyではなく解決される
       cell: (props) => props.getValue().toUpperCase(),
     }),
     { 
