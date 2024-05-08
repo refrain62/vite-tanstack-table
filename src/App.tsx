@@ -110,6 +110,10 @@ function App() {
               <div
                 key={index}
                 style={{
+                  backgroundColor:
+                    tablePosts.getState().pagination.pageIndex === index ? 'blue' : '',
+                  color:
+                    tablePosts.getState().pagination.pageIndex === index ? 'white': 'black',
                   paddiing: '0 0.5em 0 0.5em',
                   margin: '0 0.2em 0 0.2em',
                   cursor: 'pointer',
