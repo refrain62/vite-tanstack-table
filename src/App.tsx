@@ -60,6 +60,25 @@ function App() {
       accessorKey: 'body', 
       header: 'Body',
     },
+    // display列を設定することでテーブルのデータに含まれない更新や削除列を足せる
+    columnHelper.display({
+      id: 'update',
+      header: '更新',
+      cell: (props) => (
+        <button onClick={() => update(props.row.original.id)}>
+          更新
+        </button>
+      )
+    }),
+    columnHelper.display({
+      id: 'delete',
+      header: '削除',
+      cell: (props) => (
+        <button onClick={() => delete(props.row.original.id)}>
+          削除
+        </button>
+      )
+    }),
   ];
 
   // テーブル定義
