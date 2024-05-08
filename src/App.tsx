@@ -23,6 +23,8 @@ function App() {
   const [count, setCount] = useState(0)
   // テーブルデータ保持用
   const [posts, setPosts] = useState<Post[]>([]);
+  // ページのデータ取得件数
+  const [pageSize, setPageSize] = useState<number>(30);
 
   // データ取得してステートで管理
   useEffect(() => {
@@ -103,6 +105,21 @@ function App() {
         <h1>Post List</h1>
         {/* 件数 */}
         <p>Page Count: {tablePosts.getPageCount()}</p>
+        {/* データ取得件数選択 */}
+        <div>Page Size</div>
+        <select
+          value={pageSize}
+          onChange={(e) => {
+            let size = parseInt(e.target.value);
+            tablePosts.setPageSize(size);
+            setPageSize(size);
+          }}
+          >
+          <option value={10}>10</option>
+          <option value={30}>30</option>
+          <option value={50}>50</option>
+          <option value={100}>100</option>
+        </select>
         {/* ページネーション */}
         <div style={{ display: 'flex', marginBottom: '1em' }}>
           {/* 戻るボタン */}
