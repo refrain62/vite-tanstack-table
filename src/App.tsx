@@ -8,6 +8,7 @@ import {
   getCoreRowModel,
   useReactTable,
   createColumnHelper,
+  getPaginationRowModel,
 } from '@tanstack/react-table';
 
 // 投稿データの型
@@ -86,6 +87,13 @@ function App() {
     data: posts,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    // 初期表示件数
+    initialState: {
+      pagination: {
+        pageSize: 30,
+      }
+    }
   });
 
   return (
@@ -93,6 +101,27 @@ function App() {
       {/* Postの内容をテーブルに表示 */}
       <div style={{ margin: '2em' }}>
         <h1>Post List</h1>
+        {/* 件数 */}
+        <p>Page Count: {tablePosts.getPageCount()}</p>
+        {/* ページネーション */}
+        <div style={{ display: 'flex', marginBottom: '1em' }}>
+          {Array.from({ length: tablePosts.getPageCount() }, (_, i) => i).map(
+            (index) => (
+              <div
+                key={index}
+                style={{
+                  paddiing: '0 0.5em 0 0.5em',
+                  margin: '0 0.2em 0 0.2em',
+                  cursor: 'pointer',
+                  }}
+                onClick={() => tablePosts.setPageIndex(index)}
+              >
+                {index + 1}
+          </div>
+          )
+          )}
+        </div>
+
         <table>
           <thead>
             {tablePosts.getHeaderGroups().map((headerGroup) => (
