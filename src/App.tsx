@@ -43,8 +43,9 @@ function App() {
 
   // カラム定義
   const columns = [
-    columnHelper.accessor('userId', {
-      header: () => 'User ID',
+    // accessorFn 関数を利用すること複数列をまとめれる
+    columnHelper.accessor((row) => `${row.userId} ${row.id}`, {
+      id: 'WID',
     }),
     columnHelper.accessor('id', {
       header: () => <span>ID</span>,
